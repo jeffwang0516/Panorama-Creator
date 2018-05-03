@@ -1,14 +1,5 @@
 function [feature_window_cell] = findMsopDescriptor(image, feature_record)
-    rs8 = 1 / sqrt( 8 );
-    rs2 = 1 / sqrt( 2 );  
-    H = [ rs8  rs8  rs8  rs8  rs8  rs8  rs8  rs8;
-        rs8  rs8  rs8  rs8 -rs8 -rs8 -rs8 -rs8;
-        0.5  0.5 -0.5 -0.5    0    0    0    0;
-          0    0    0    0  0.5  0.5 -0.5 -0.5;
-        rs2 -rs2    0    0    0    0    0    0;
-          0    0  rs2 -rs2    0    0    0    0;
-          0    0    0    0  rs2 -rs2    0    0;
-          0    0    0    0    0    0  rs2 -rs2;];
+    
     image = rgb2gray(image);
     img_size = size(image);
     
@@ -67,7 +58,7 @@ function [feature_window_cell] = findMsopDescriptor(image, feature_record)
                 count = count+1;
                 feature_window_cell{count,1} = i;
                 feature_window_cell{count,2} = j;
-                feature_window_cell{count,3} = transpose(H) * sampleFeatureWindow * H;
+                feature_window_cell{count,3} = sampleFeatureWindow;
             end
         end
     end
