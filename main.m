@@ -30,7 +30,15 @@ focal_length = [704.916; 706.286; 705.849; 706.645;
 tic
 disp('Transform image to Cylindrical coordinate..');
 for i=1:numPic
-    image{i} = cylindricalProjection(image{i}, focal_length(i));
+    filename = sprintf('image/proj/prtn%02d.jpg', i-1);
+    if exist(filename, 'file')
+        image{i} = imread(filename);
+    
+    else
+        image{i} = cylindricalProjection(image{i}, focal_length(i));
+        imwrite(image{i}, filename);
+    end
+    
 end
 disp('All images Transformed');
 toc
