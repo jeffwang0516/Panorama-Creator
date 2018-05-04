@@ -11,9 +11,9 @@ function [match_pair] = featureMatching(descriptor1, descriptor2, nn_threshold)
     for i=1:descriptor1_size
 
         for j=1:descriptor2_size
-            difference_mat = descriptor1{i,3}(:) - descriptor2{j,3}(:);
-            difference = norm(difference_mat(:));
-            dist(i,j) = difference;
+            difference_mat = descriptor1{i,3} - descriptor2{j,3};
+            
+            dist(i,j) = norm(difference_mat(:));
         end        
     end
     

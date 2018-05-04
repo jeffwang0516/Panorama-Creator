@@ -2,6 +2,8 @@ close all
 clc
 clear
 
+
+
 %% Constants Settings
 numPic = 18;
 desired_numOfInterestPt = 1000;
@@ -59,8 +61,12 @@ toc
 disp('---');
 
 %% Feature Matching & showMatchedFeatures
+
 disp('Matching features...');
 tic
+
+matched_pairs = cell(numPic, numPic);
+
 for img_num=numPic:-1:2
     
     descriptor1 = all_img_descriptors{img_num};
@@ -69,18 +75,43 @@ for img_num=numPic:-1:2
     nn_threshold = nearestneighbor_threshold;
     matches = featureMatching(descriptor1, descriptor2, nn_threshold);
     matrix = cell2mat(matches);
-    a = matrix(1:end, 2:-1:1);
-    b = matrix(1:end, 4:-1:3);
-    figure;
-    showMatchedFeatures( image{img_num}, image{img_num-1}, a, b, 'montage');
+    img1_matched_points = matrix(1:end, 1:2);
+    img2_matched_points = matrix(1:end, 3:4);
     
+    % Save to cell for future processing
+    matched_pairs{img_num, img_num-1} = {img1_matched_points;img2_matched_points};
+    matched_pairs{img_num-1, img_num} = {img2_matched_points;img1_matched_points};
+   
 end
 
 disp('Feature Matched Result');
 toc
 disp('---');
 
-%% Image Matching & RANSAC
+%% showMatchedFeatures 
+% disp('Show Matched features...');
+% tic
+% 
+%     for img_num=numPic:-1:2
+%         match = matched_pairs{img_num, img_num-1};
+%         
+%         matched_points1 = match{1}(1:end, 2:-1:1);
+%         matched_points2 = match{2}(1:end, 2:-1:1);
+%     
+%         figure;
+%         showMatchedFeatures( image{img_num}, image{img_num-1}, matched_points1, matched_points2, 'montage');
+%     end
+% disp('Matched Result Figures');
+% toc
+% disp('---');
+
+%% Image Matching with RANSAC
+    % Matched results stored in matched_pairs
+    % With matched feature location(row,col) in both image
+    % Usage:
+    %   match = matched_pairs{img_num_1, img_num_2}; 
+    %   matched_points1 = match{1}; --> nx2 matrix (row,col)
+    %   matched_points2 = match{2}; --> nx2 matrix (row,col)
 
 
 
