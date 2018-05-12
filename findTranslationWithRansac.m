@@ -13,7 +13,7 @@ function [mx,my] = findTranslationWithRansac(matched_points1, matched_points2, s
         
         mx_iter = -1;
         my_iter = -100;
-        while mx_iter < 0 %|| abs(my_iter) >20
+        while mx_iter < 0 
             random_index = floor(rand * matchPairSize) + 1;
             point1 = matched_points1(random_index,:);
             point2 = matched_points2(random_index,:);
@@ -43,12 +43,8 @@ function [mx,my] = findTranslationWithRansac(matched_points1, matched_points2, s
             mx = mx_iter;
             my = my_iter;
             final_inlier_count = inlier_count;
-            
-           
+         
         end
     end
-    fprintf("mx=%d, my=%d\n", mx,my);
-    
-    
-
+%     fprintf("mx=%d, my=%d\n", mx,my);
 end
