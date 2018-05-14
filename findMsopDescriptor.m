@@ -1,5 +1,6 @@
 function [feature_window_cell] = findMsopDescriptor(image, feature_record)
-    
+    %% Find Feature descriptor
+    % MSOP: Sample 8x8 oriented patch from 40x40 window
     image = rgb2gray(image);
     img_size = size(image);
     
@@ -7,10 +8,7 @@ function [feature_window_cell] = findMsopDescriptor(image, feature_record)
     COLS = img_size(2);
     smoothedImage = imgaussfilt( image, 4.5 );
     [Gmag,Gdir] = imgradient(smoothedImage);
-    
-    
-    feature_num = sum(feature_record(:));
-%     feature_window_cell = cell(feature_num,3);
+
     count = 0;
     for i=1:ROWS
         for j=1:COLS

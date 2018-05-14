@@ -12,7 +12,6 @@ function [feature_anms_selected] = adaptiveNonMaximalSuppression(fHM, feature_re
     COLS = img_size(2);
     
     %% Pick out fHM values of selected features, reshape to nx1
-%     fHM_selected = fHM .* feature_record;
     feature_index = find(feature_record > 0);
     featureVal = fHM( feature_index );
 
@@ -31,29 +30,16 @@ function [feature_anms_selected] = adaptiveNonMaximalSuppression(fHM, feature_re
     %% find min suppress radius R(i) for each interest point i
 
     for i=num_of_feature:-1:1
-%         x1= mod(sorted_feature_index(i), ROWS);
-%         if x1==0
-%             x1=ROWS;
-%         end
-%         x2= ceil(sorted_feature_index(i) / ROWS);
         min_dist = inf;
-%         toc
+
         if i>1
             for j=i-1:-1:1
                 if fHM(sorted_feature_index(i)) < 0.9*fHM(sorted_feature_index(j))
-                    
-%                     y1= mod(sorted_feature_index(j,1), ROWS);
-%                     if y1==0
-%                         y1=ROWS;
-%                     end
-%                     y2= ceil(sorted_feature_index(j,1) / ROWS);
-%                     dist = norm([x(j)-x(i),y(j)-y(i)]);
+
                     dist = sqrt((x(j)-x(i))^2 + (y(j)-y(i))^2);
                     if min_dist > dist
                         min_dist = dist;
-                    end
-%                     min_dist = min([min_dist, dist]);
-                    
+                    end                   
                 end
             end
         end
@@ -73,7 +59,6 @@ function [feature_anms_selected] = adaptiveNonMaximalSuppression(fHM, feature_re
     
     %% Construct output mask for selected features
     feature_anms_index = sorted_feature_index(index_of_features);
-%     feature_anms = fHM(feature_anms_index);
     feature_anms_selected = zeros(ROWS,COLS);
     for i=1:numOfIp
         x1= (mod(feature_anms_index(i), ROWS));
