@@ -9,7 +9,7 @@
 - Original Photo Sets:  imageset/
 - Panoroma output directory:  result/
 ## Prerequisite
-- Resize your photos(for faster processing speed) and use [autostitch](http://matthewalunbrown.com/autostitch/autostitch.html) to find the focal length for each photo.
+- Resize your photos(for faster processing speed) and use [autostitch](https://mattabrown.github.io/autostitch.html) to find the focal length for each photo.
 - Change the focal_length array
 ```
 % main.m
